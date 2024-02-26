@@ -5,6 +5,8 @@ import Header from '../components/Header';
 import DashboardHeader from '../components/home/DashboardHeader';
 import InfoPendapatan from '../components/home/InfoPendapatan';
 import DaftarGor from '../components/home/DaftarGor';
+import JumlahGOR from '../components/home/JumlahGOR';
+import BottomSpace from '../components/BottomSpace';
 
 interface Home {
   navigation: any;
@@ -44,9 +46,11 @@ const Home = ({navigation}: Home) => {
         <HeaderContainer>
           <Header title="Dashboard" />
           <DashboardHeader />
+          <JumlahGOR />
           <InfoPendapatan pendapatan={1000000} />
           <DaftarGor data={data} onPress={handleNavigateGORDetail} />
         </HeaderContainer>
+        <BottomSpace marginBottom={100} />
       </RootContainer>
     </>
   );
