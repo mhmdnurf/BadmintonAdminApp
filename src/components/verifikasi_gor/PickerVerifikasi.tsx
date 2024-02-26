@@ -2,15 +2,14 @@ import {Picker} from '@react-native-picker/picker';
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 
-interface InputField {
+interface PickerVerifikasi {
   selectedValue: string;
   onValueChange: (itemValue: string, itemIndex: number) => void;
 }
 
-const InputField = ({selectedValue, onValueChange}: InputField) => {
+const PickerVerifikasi = ({selectedValue, onValueChange}: PickerVerifikasi) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Status</Text>
+    <>
       <View style={styles.pickerContainer}>
         <Picker selectedValue={selectedValue} onValueChange={onValueChange}>
           <Picker.Item label="Konfirmasi" value="Konfirmasi" />
@@ -20,17 +19,13 @@ const InputField = ({selectedValue, onValueChange}: InputField) => {
       <Pressable style={styles.btnSubmit}>
         <Text style={styles.btnText}>Submit</Text>
       </Pressable>
-    </View>
+    </>
   );
 };
 
-export default InputField;
+export default PickerVerifikasi;
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: 20,
-    marginTop: 40,
-  },
   pickerContainer: {
     borderWidth: 3,
     borderColor: '#EEEDEB',
@@ -48,10 +43,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: 'grey',
   },
 });

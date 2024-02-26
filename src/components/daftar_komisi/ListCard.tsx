@@ -2,21 +2,21 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 interface ListCard {
-  fullName: string;
+  date: string;
+  totalKomisi: number;
   namaGOR: string;
-  status: string;
 }
 
-const ListCard = ({fullName, namaGOR, status}: ListCard) => {
+const ListCard = ({date, totalKomisi, namaGOR}: ListCard) => {
   return (
     <>
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Text style={styles.title}>{fullName}</Text>
-          <Text style={styles.title}>{namaGOR}</Text>
-          <View style={styles.statusContainer}>
-            <Text style={styles.statusText}>{status}</Text>
+          <View style={styles.dateContainer}>
+            <Text style={styles.dateText}>{date}</Text>
           </View>
+          <Text style={styles.title}>{`Rp.${totalKomisi}`}</Text>
+          <Text style={styles.namaGOR}>{namaGOR}</Text>
         </View>
       </View>
     </>
@@ -34,23 +34,37 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 10,
     borderColor: '#EEEDEB',
-    paddingTop: 30,
+    paddingTop: 10,
     paddingBottom: 15,
     paddingHorizontal: 10,
+    backgroundColor: '#AAC8A7',
   },
   title: {
-    fontSize: 18,
-    color: '#6F7789',
-  },
-  statusContainer: {
-    backgroundColor: '#ECEE81',
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  statusText: {
-    textAlign: 'center',
+    fontSize: 36,
     color: 'white',
     fontWeight: '600',
+    textAlign: 'center',
+    marginTop: 20,
+  },
+  dateContainer: {
+    padding: 10,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderColor: '#EEEDEB',
+    borderWidth: 3,
+  },
+  dateText: {
+    fontSize: 16,
+    color: '#35374B',
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  namaGOR: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: 'white',
+    fontWeight: '600',
+    marginTop: 10,
+    marginBottom: 20,
   },
 });

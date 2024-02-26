@@ -1,21 +1,21 @@
 import React from 'react';
-import {Pressable, Text} from 'react-native';
+import {Pressable, FlatList} from 'react-native';
 import ListCard from './ListCard';
-import {FlatList} from 'react-native-gesture-handler';
+import BottomSpace from '../BottomSpace';
 
 interface ListVerifikasiData {
   id: string;
-  fullName: string;
+  date: string;
+  totalKomisi: number;
   namaGOR: string;
-  status: string;
 }
 
-interface ListVerifikasi {
+interface ListKomisi {
   data: ListVerifikasiData[];
   onPress: () => void;
 }
 
-const ListVerifikasi = ({data, onPress}: ListVerifikasi) => {
+const ListKomisi = ({data, onPress}: ListKomisi) => {
   return (
     <>
       <FlatList
@@ -23,17 +23,17 @@ const ListVerifikasi = ({data, onPress}: ListVerifikasi) => {
         renderItem={({item}) => (
           <Pressable onPress={onPress}>
             <ListCard
-              fullName={item.fullName}
+              date={item.date}
+              totalKomisi={item.totalKomisi}
               namaGOR={item.namaGOR}
-              status={item.status}
             />
           </Pressable>
         )}
         keyExtractor={item => item.id}
+        ListFooterComponent={<BottomSpace marginBottom={125} />}
       />
-      <Text>Hello</Text>
     </>
   );
 };
 
-export default ListVerifikasi;
+export default ListKomisi;
