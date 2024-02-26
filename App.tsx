@@ -8,6 +8,7 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import MainTabs from './src/components/nav/MainTabs';
 import InfoGor from './src/screens/InfoGor';
 import DetailVerifikasiGor from './src/screens/DetailVerifikasiGor';
+import DetailKomisi from './src/screens/DetailKomisi';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,15 @@ export default function App() {
         <Stack.Screen
           name="DetailVerifikasiGor"
           component={DetailVerifikasiGor}
+          options={{
+            title: '',
+            headerShown: true,
+            headerTintColor: '#AAC8A7',
+          }}
+        />
+        <Stack.Screen
+          name="DetailKomisi"
+          component={DetailKomisi}
           options={{
             title: '',
             headerShown: true,

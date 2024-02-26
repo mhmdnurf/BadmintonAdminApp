@@ -27,6 +27,7 @@ const InfoPendapatan = ({pendapatan}: InfoPendapatan) => {
           <Text style={styles.title}>{`Komisi Bulan ${
             monthNames[new Date().getMonth()]
           } ${new Date().getFullYear()}`}</Text>
+
           <View style={styles.subTitleContainer}>
             <Text style={[styles.subTitle]}>{`Rp. ${pendapatan.toLocaleString(
               'id-ID',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: '#AAC8A7',
     padding: 40,
-    borderRadius: 20,
+    borderRadius: 15,
     elevation: 5,
     marginBottom: 20,
   },

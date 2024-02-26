@@ -37,8 +37,6 @@ const Home = ({navigation}: Home) => {
       itemId: id,
       namaGOR: 'GOR Chans',
     });
-
-    // console.log('id', id);
   };
   return (
     <>

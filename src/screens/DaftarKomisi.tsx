@@ -3,7 +3,11 @@ import FlatContainer from '../components/FlatContainer';
 import Header from '../components/Header';
 import ListKomisi from '../components/daftar_komisi/ListKomisi';
 
-const DaftarKomisi = () => {
+interface DaftarKomisi {
+  navigation: any;
+}
+
+const DaftarKomisi = ({navigation}: DaftarKomisi) => {
   const data = [
     {
       id: '1',
@@ -24,11 +28,15 @@ const DaftarKomisi = () => {
       namaGOR: 'GOR C',
     },
   ];
+
+  const handleNavigateDetailKomisi = () => {
+    navigation.navigate('DetailKomisi');
+  };
   return (
     <>
       <FlatContainer backgroundColor="white">
         <Header title="Daftar Komisi" />
-        <ListKomisi data={data} onPress={() => console.log(1)} />
+        <ListKomisi data={data} onPress={handleNavigateDetailKomisi} />
       </FlatContainer>
     </>
   );

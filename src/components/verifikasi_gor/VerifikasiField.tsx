@@ -18,6 +18,8 @@ const VerifikasiField = () => {
       <Pressable style={styles.btnSubmit}>
         <Text style={styles.btnText}>Lihat</Text>
       </Pressable>
+      <Text style={styles.label}>Catatan</Text>
+      <InputField placeholder="Catatan" />
       <SubmitButton />
     </View>
   );
