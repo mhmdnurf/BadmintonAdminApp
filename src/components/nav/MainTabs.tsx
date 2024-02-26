@@ -3,8 +3,28 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../../screens/Home';
 import Profile from '../../screens/Profile';
+import DaftarKomisi from '../../screens/DaftarKomisi';
+import VerfikasiGor from '../../screens/VerifikasiGor';
+
+interface Tab {
+  color: string;
+  size: number;
+}
 
 const Tab = createBottomTabNavigator();
+
+const HomeIcon = ({color, size}: Tab) => (
+  <Icon name="home" color={color} size={size} />
+);
+const ProfileIcon = ({color, size}: Tab) => (
+  <Icon name="account-box" color={color} size={size} />
+);
+const VerifikasiGOR = ({color, size}: Tab) => (
+  <Icon name="account-box-multiple" color={color} size={size} />
+);
+const KomisiIcon = ({color, size}: Tab) => (
+  <Icon name="account-cash" color={color} size={size} />
+);
 
 const MainTabs = () => {
   return (
@@ -29,9 +49,23 @@ const MainTabs = () => {
           name="HomeTab"
           component={Home}
           options={{
-            tabBarIcon: ({color, size}) => (
-              <Icon name="home" color={color} size={size} />
-            ),
+            tabBarIcon: HomeIcon,
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="VerifikasiGor"
+          component={VerfikasiGor}
+          options={{
+            tabBarIcon: VerifikasiGOR,
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="DaftarKomisi"
+          component={DaftarKomisi}
+          options={{
+            tabBarIcon: KomisiIcon,
             headerShown: false,
           }}
         />
@@ -39,9 +73,7 @@ const MainTabs = () => {
           name="Profile"
           component={Profile}
           options={{
-            tabBarIcon: ({color, size}) => (
-              <Icon name="account-box" color={color} size={size} />
-            ),
+            tabBarIcon: ProfileIcon,
             headerShown: false,
           }}
         />

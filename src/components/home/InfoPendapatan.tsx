@@ -23,13 +23,15 @@ const InfoPendapatan = ({pendapatan}: InfoPendapatan) => {
   return (
     <>
       <View style={styles.container}>
-        <Text style={styles.title}>{`Komisi Bulan ${
-          monthNames[new Date().getMonth()]
-        } ${new Date().getFullYear()}`}</Text>
-        <View style={styles.subTitleContainer}>
-          <Text style={[styles.subTitle]}>{`Rp. ${pendapatan.toLocaleString(
-            'id-ID',
-          )}`}</Text>
+        <View style={styles.card}>
+          <Text style={styles.title}>{`Komisi Bulan ${
+            monthNames[new Date().getMonth()]
+          } ${new Date().getFullYear()}`}</Text>
+          <View style={styles.subTitleContainer}>
+            <Text style={[styles.subTitle]}>{`Rp. ${pendapatan.toLocaleString(
+              'id-ID',
+            )}`}</Text>
+          </View>
         </View>
       </View>
     </>
@@ -44,21 +46,24 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '600',
-    color: '#6F7789',
+    color: 'white',
   },
   subTitleContainer: {
     marginTop: 10,
-    backgroundColor: '#FFB996',
-    padding: 20,
     borderRadius: 10,
-    elevation: 5,
   },
   subTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+    fontSize: 36,
+    fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',
+  },
+  card: {
+    backgroundColor: '#AAC8A7',
+    padding: 40,
+    borderRadius: 20,
+    elevation: 5,
+    marginBottom: 20,
   },
 });

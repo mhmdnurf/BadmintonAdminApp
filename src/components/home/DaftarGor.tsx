@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, Pressable} from 'react-native';
 import ContentHeader from './ContentHeader';
 import LapanganCard from './LapanganCard';
 
@@ -12,9 +12,10 @@ interface GorData {
 
 interface DaftarGor {
   data: GorData[];
+  onPress: (id: string) => () => void;
 }
 
-const DaftarGor = ({data}: DaftarGor) => {
+const DaftarGor = ({data, onPress}: DaftarGor) => {
   return (
     <>
       {/* Lapangan Start */}
@@ -23,11 +24,13 @@ const DaftarGor = ({data}: DaftarGor) => {
         data={data}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-          <LapanganCard
-            imageSource={item.imageSource}
-            namaGOR={item.namaGOR}
-            jumlahLapangan={item.jumlahLapangan}
-          />
+          <Pressable onPress={onPress(item.id)}>
+            <LapanganCard
+              imageSource={item.imageSource}
+              namaGOR={item.namaGOR}
+              jumlahLapangan={item.jumlahLapangan}
+            />
+          </Pressable>
         )}
         keyExtractor={item => item.id}
         horizontal={true}

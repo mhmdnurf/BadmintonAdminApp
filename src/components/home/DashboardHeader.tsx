@@ -6,7 +6,7 @@ const DashboardHeader = () => {
     <>
       <View style={styles.container}>
         <Text style={styles.title}>Halo, Admin</Text>
-        <Text style={styles.title}>Sudah cek pendapatan hari ini?</Text>
+        <Text style={styles.title}>Cek hasil komisi anda!</Text>
       </View>
     </>
   );
@@ -17,6 +17,7 @@ export default DashboardHeader;
 const styles = StyleSheet.create({
   container: {
     marginHorizontal: 20,
+    marginTop: 40,
   },
   title: {
     fontSize: 24,

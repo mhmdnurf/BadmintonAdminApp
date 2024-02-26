@@ -6,6 +6,8 @@ import Login from './src/screens/Login';
 import Register from './src/screens/Register';
 import ForgotPassword from './src/screens/ForgotPassword';
 import MainTabs from './src/components/nav/MainTabs';
+import InfoGor from './src/screens/InfoGor';
+import DetailVerifikasiGor from './src/screens/DetailVerifikasiGor';
 
 const Stack = createStackNavigator();
 
@@ -41,6 +43,20 @@ export default function App() {
           name="Home"
           component={MainTabs}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="InfoGor"
+          component={InfoGor}
+          options={{headerShown: true, title: '', headerTintColor: '#AAC8A7'}}
+        />
+        <Stack.Screen
+          name="DetailVerifikasiGor"
+          component={DetailVerifikasiGor}
+          options={{
+            title: '',
+            headerShown: true,
+            headerTintColor: '#AAC8A7',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
