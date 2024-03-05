@@ -25,6 +25,7 @@ const LoginField = ({
           secureTextEntry={false}
           value={emailValue}
           onChangeText={onChangeTextEmail}
+          keyboardType="email-address"
         />
         <InputField
           placeholder="Password"
@@ -54,5 +55,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     color: '#AAC8A7',
     fontSize: 12,
+    fontFamily: 'Poppins Regular',
   },
 });

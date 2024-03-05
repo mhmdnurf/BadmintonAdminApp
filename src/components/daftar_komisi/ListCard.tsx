@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     color: 'white',
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     textAlign: 'center',
     marginTop: 20,
   },
@@ -56,14 +56,14 @@ const styles = StyleSheet.create({
   dateText: {
     fontSize: 16,
     color: '#35374B',
-    fontWeight: '500',
+    fontFamily: 'Poppins SemiBold',
     textAlign: 'center',
   },
   namaGOR: {
     textAlign: 'center',
     fontSize: 18,
     color: 'white',
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     marginTop: 10,
     marginBottom: 20,
   },

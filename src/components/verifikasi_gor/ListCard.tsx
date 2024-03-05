@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     color: '#6F7789',
+    fontFamily: 'Nunito SemiBold',
   },
   statusContainer: {
     backgroundColor: '#ECEE81',
@@ -51,6 +52,6 @@ const styles = StyleSheet.create({
   statusText: {
     textAlign: 'center',
     color: 'white',
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
   },
 });

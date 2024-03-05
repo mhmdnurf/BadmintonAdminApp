@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: 'grey',
+    fontFamily: 'Nunito Regular',
   },
   btnSubmit: {
     backgroundColor: '#AAC8A7',
@@ -47,6 +48,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
   },
 });

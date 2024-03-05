@@ -1,19 +1,28 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 interface LoginButton {
   onPress: () => void;
+  loading: boolean;
 }
 
-const LoginButton = ({onPress}: LoginButton) => {
+const LoginButton = ({onPress, loading}: LoginButton) => {
   return (
-    <>
-      <View style={styles.btnContainer}>
-        <Pressable onPress={onPress}>
+    <View style={styles.btnContainer}>
+      <Pressable onPress={onPress}>
+        {loading ? (
+          <ActivityIndicator size={30} color="white" />
+        ) : (
           <Text style={styles.btnText}>Login</Text>
-        </Pressable>
-      </View>
-    </>
+        )}
+      </Pressable>
+    </View>
   );
 };
 
@@ -23,7 +32,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignSelf: 'center',
     marginTop: 20,
-    padding: 15,
+    padding: 10,
     width: '100%',
     backgroundColor: '#AAC8A7',
     borderRadius: 15,
@@ -31,7 +40,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 18,
     textAlign: 'center',
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     color: 'white',
   },
 });

@@ -7,13 +7,13 @@ const KomisiField = () => {
     <>
       <View style={styles.container}>
         <Text style={styles.label}>Nama Pemilik</Text>
-        <InputField placeholder="Nama Pemilik" />
+        <InputField placeholder="Nama Pemilik" editable={false} />
         <Text style={styles.label}>Nama GOR</Text>
-        <InputField placeholder="Nama GOR" />
+        <InputField placeholder="Nama GOR" editable={false} />
         <Text style={styles.label}>Periode</Text>
-        <InputField placeholder="Periode" />
+        <InputField placeholder="Periode" editable={false} />
         <Text style={styles.label}>Jumlah Komisi</Text>
-        <InputField placeholder="Jumlah Komisi" />
+        <InputField placeholder="Jumlah Komisi" editable={false} />
         <Pressable style={styles.btnSubmit}>
           <Text style={styles.btnText}>Cetak Invoice</Text>
         </Pressable>
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: 'grey',
+    fontFamily: 'Poppins Regular',
   },
   btnSubmit: {
     backgroundColor: '#AAC8A7',
@@ -44,6 +45,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
   },
 });

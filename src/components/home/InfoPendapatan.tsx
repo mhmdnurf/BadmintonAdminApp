@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     color: 'white',
   },
   subTitleContainer: {
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   subTitle: {
     fontSize: 36,
-    fontWeight: 'bold',
+    fontFamily: 'Poppins Bold',
     color: 'white',
   },
   card: {

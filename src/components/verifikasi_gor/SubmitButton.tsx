@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
   },
   btnTolak: {
     backgroundColor: '#FF8080',

@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     color: '#6F7789',
     marginRight: 10,
   },
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 24,
     textAlign: 'center',
-    fontWeight: '600',
+    fontFamily: 'Nunito Bold',
     color: 'white',
     padding: 5,
   },

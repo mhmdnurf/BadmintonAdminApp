@@ -6,14 +6,28 @@ import BottomSpace from '../components/BottomSpace';
 import ProfileField from '../components/profile/ProfileField';
 import LogoutButton from '../components/profile/LogoutButton';
 import EditButton from '../components/profile/EditButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import auth from '@react-native-firebase/auth';
 
 interface Profile {
   navigation: any;
 }
 
 const Profile = ({navigation}: Profile) => {
-  const handleLogout = () => {
-    console.log('Logout');
+  const handleLogout = async () => {
+    try {
+      const currentUser = auth().currentUser;
+      if (currentUser) {
+        await auth().signOut();
+        await AsyncStorage.removeItem('userToken');
+        console.log('User signed out!');
+        navigation.replace('Login');
+      } else {
+        console.log('No user is currently signed in.');
+      }
+    } catch (error) {
+      console.log('Error signing out:', error);
+    }
   };
 
   const handleNavigateToEditProfile = () => {

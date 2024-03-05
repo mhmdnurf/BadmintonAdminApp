@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     alignSelf: 'center',
     marginTop: 10,
-    padding: 15,
+    padding: 10,
     width: '100%',
     backgroundColor: '#FD4949',
     borderRadius: 15,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 18,
     textAlign: 'center',
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
     color: 'white',
   },
 });
