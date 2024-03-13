@@ -5,7 +5,7 @@ import {FlatList} from 'react-native-gesture-handler';
 
 interface ListVerifikasiData {
   id: string;
-  fullName: string;
+  namaLengkap: string;
   namaGOR: string;
   status: string;
 }
@@ -23,9 +23,12 @@ const ListVerifikasi = ({data, onPress}: ListVerifikasi) => {
         renderItem={({item}) => (
           <Pressable onPress={onPress}>
             <ListCard
-              fullName={item.fullName}
+              fullName={item.namaLengkap}
               namaGOR={item.namaGOR}
               status={item.status}
+              backgroundColor={
+                item.status === 'Belum Terverifikasi' ? '#EEC759' : '#FF8080'
+              }
             />
           </Pressable>
         )}

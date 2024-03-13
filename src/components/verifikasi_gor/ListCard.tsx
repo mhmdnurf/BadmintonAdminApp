@@ -5,16 +5,17 @@ interface ListCard {
   fullName: string;
   namaGOR: string;
   status: string;
+  backgroundColor: string;
 }
 
-const ListCard = ({fullName, namaGOR, status}: ListCard) => {
+const ListCard = ({fullName, namaGOR, status, backgroundColor}: ListCard) => {
   return (
     <>
       <View style={styles.container}>
         <View style={styles.cardContainer}>
           <Text style={styles.title}>{fullName}</Text>
           <Text style={styles.title}>{namaGOR}</Text>
-          <View style={styles.statusContainer}>
+          <View style={[styles.statusContainer, {backgroundColor}]}>
             <Text style={styles.statusText}>{status}</Text>
           </View>
         </View>
@@ -44,7 +45,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito SemiBold',
   },
   statusContainer: {
-    backgroundColor: '#ECEE81',
     paddingVertical: 10,
     borderRadius: 10,
     marginTop: 20,

@@ -28,6 +28,7 @@ const InputField = ({
         onChangeText={onChangeText}
         editable={editable}
         keyboardType={keyboardType}
+        placeholderTextColor={'grey'}
       />
     </>
   );
@@ -43,5 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 5,
     flexGrow: 1,
+    color: 'black',
+    fontFamily: 'Poppins Regular',
   },
 });

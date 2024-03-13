@@ -1,13 +1,27 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 const JumlahGOR = () => {
+  const [jumlahGOR, setJumlahGOR] = React.useState(0);
+
+  const fetchJumlahGOR = React.useCallback(async () => {
+    const jumlahGORRef = firestore()
+      .collection('users')
+      .where('status', '==', 'Terverifikasi');
+    const snapshot = await jumlahGORRef.get();
+    setJumlahGOR(snapshot.size);
+  }, []);
+
+  React.useEffect(() => {
+    fetchJumlahGOR();
+  }, [fetchJumlahGOR]);
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.title}>Jumlah GOR</Text>
         <View style={styles.numberContainer}>
-          <Text style={styles.number}>3</Text>
+          <Text style={styles.number}>{jumlahGOR}</Text>
         </View>
       </View>
     </>

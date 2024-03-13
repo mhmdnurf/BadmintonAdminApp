@@ -48,7 +48,7 @@ const Login = ({navigation}: Login) => {
               console.log('User logged in successfully!');
               const userToken = userCredential.user.uid;
               await AsyncStorage.setItem('userToken', userToken);
-              navigation.navigate('Home');
+              navigation.replace('Home');
             } else {
               Alert.alert('Error', 'Login failed. Please try again later.');
             }

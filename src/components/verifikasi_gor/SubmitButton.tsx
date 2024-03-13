@@ -1,15 +1,39 @@
 import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
-const SubmitButton = () => {
+interface SubmitButton {
+  onPressConfirm: () => void;
+  onPressTolak: () => void;
+  isLoading: boolean;
+}
+
+const SubmitButton = ({
+  onPressConfirm,
+  onPressTolak,
+  isLoading,
+}: SubmitButton) => {
   return (
     <>
       <View style={styles.container}>
-        <Pressable style={styles.btnSubmit}>
-          <Text style={styles.btnText}>Konfirmasi</Text>
+        <Pressable style={styles.btnSubmit} onPress={onPressConfirm}>
+          {isLoading ? (
+            <ActivityIndicator size={25} color="white" />
+          ) : (
+            <Text style={styles.btnText}>Konfirmasi</Text>
+          )}
         </Pressable>
-        <Pressable style={styles.btnTolak}>
-          <Text style={styles.btnText}>Tolak</Text>
+        <Pressable style={styles.btnTolak} onPress={onPressTolak}>
+          {isLoading ? (
+            <ActivityIndicator size={25} color="white" />
+          ) : (
+            <Text style={styles.btnText}>Tolak</Text>
+          )}
         </Pressable>
       </View>
     </>
