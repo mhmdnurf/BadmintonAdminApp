@@ -5,6 +5,8 @@ import ListVerifikasi from '../components/verifikasi_gor/ListVerifikasi';
 import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore';
+import {useIsFocused} from '@react-navigation/native';
+import NoData from '../components/verifikasi_gor/NoData';
 
 interface VerifikasiGor {
   navigation: any;
@@ -18,6 +20,7 @@ interface Data {
 }
 
 const VerfikasiGor = ({navigation}: VerifikasiGor) => {
+  const isFocused = useIsFocused();
   const [dataGOR, setDataGOR] = React.useState<Data[]>([]);
   const fetchGOR = React.useCallback(async () => {
     const belumTerverifikasiRef = firestore()
@@ -51,8 +54,10 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
   }, []);
 
   React.useEffect(() => {
-    fetchGOR();
-  }, [fetchGOR]);
+    if (isFocused) {
+      fetchGOR();
+    }
+  }, [fetchGOR, isFocused]);
 
   const handleNavigate = () => {
     navigation.navigate('DetailVerifikasiGor', {data: dataGOR});
@@ -61,7 +66,11 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
     <>
       <FlatContainer backgroundColor="white">
         <Header title="Verifikasi GOR" />
-        <ListVerifikasi data={dataGOR} onPress={handleNavigate} />
+        {dataGOR.length === 0 ? (
+          <NoData />
+        ) : (
+          <ListVerifikasi data={dataGOR} onPress={handleNavigate} />
+        )}
       </FlatContainer>
     </>
   );

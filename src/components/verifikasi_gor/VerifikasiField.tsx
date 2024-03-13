@@ -23,13 +23,13 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleConfirmRequest = async () => {
+    setIsLoading(true);
     try {
       const userUID = data[0].user_uid;
       await firestore().collection('users').doc(userUID).update({
-        status: 'Belum Terverifikasi',
-        catatan: catatan,
+        status: 'Terverifikasi',
+        catatan: 'Verifikasi GOR telah dikonfirmasi',
       });
-
       console.log('Data berhasil diupdate', {
         status: 'Terverifikasi',
         catatan: catatan,
@@ -37,10 +37,14 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
+      navigation.navigate('VerifikasiGor');
     }
   };
 
   const handleTolakRequest = async () => {
+    setIsLoading(true);
     try {
       const userUID = data[0].user_uid;
       await firestore().collection('users').doc(userUID).update({
@@ -55,12 +59,12 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
     } catch (error) {
       console.log(error);
     } finally {
+      setIsLoading(false);
       navigation.navigate('VerifikasiGor');
     }
   };
 
   const handleConfirm = async () => {
-    setIsLoading(true);
     try {
       Alert.alert(
         'Data akan diverifikasi!',
@@ -78,13 +82,10 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       );
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleTolak = async () => {
-    setIsLoading(true);
     try {
       Alert.alert(
         'Data akan diverifikasi!',
@@ -103,8 +104,6 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       );
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsLoading(false);
     }
   };
 

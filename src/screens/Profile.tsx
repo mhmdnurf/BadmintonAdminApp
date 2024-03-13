@@ -8,12 +8,25 @@ import LogoutButton from '../components/profile/LogoutButton';
 import EditButton from '../components/profile/EditButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import {useIsFocused} from '@react-navigation/native';
 
 interface Profile {
   navigation: any;
 }
 
 const Profile = ({navigation}: Profile) => {
+  const [profileData, setProfileData] = React.useState({} as any);
+  const isFocused = useIsFocused();
+  const fetchUser = React.useCallback(async () => {
+    const user = auth().currentUser;
+    if (user) {
+      const userUID = user.uid;
+      const userRef = firestore().collection('users').doc(userUID);
+      const userData = await userRef.get();
+      setProfileData(userData.data());
+    }
+  }, []);
   const handleLogout = async () => {
     try {
       const currentUser = auth().currentUser;
@@ -33,13 +46,19 @@ const Profile = ({navigation}: Profile) => {
   const handleNavigateToEditProfile = () => {
     console.log('Edit Profile');
   };
+
+  React.useEffect(() => {
+    if (isFocused) {
+      fetchUser();
+    }
+  }, [fetchUser, isFocused]);
   return (
     <>
       <RootContainer backgroundColor="white">
         <Header title="Profile" />
         <ImageProfile />
         <EditButton onPress={handleNavigateToEditProfile} />
-        <ProfileField />
+        <ProfileField data={profileData} />
         <LogoutButton onPress={handleLogout} />
         <BottomSpace marginBottom={100} />
       </RootContainer>
