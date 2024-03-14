@@ -1,16 +1,25 @@
 import React from 'react';
 import Logo from '../../assets/svg/void.svg';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
 
-const NoData = () => {
+interface NoData {
+  refreshing: boolean;
+  onRefresh: () => void;
+}
+
+const NoData = ({refreshing, onRefresh}: NoData) => {
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <Logo width={300} height={300} />
         <Text style={styles.title}>
           Tidak ada verifikasi yang perlu dilakukan 😊
         </Text>
-      </View>
+      </ScrollView>
     </>
   );
 };

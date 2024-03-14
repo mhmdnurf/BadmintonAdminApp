@@ -20,6 +20,9 @@ interface Data {
   suratIzin: string;
   fotoGOR: string;
   catatan: string;
+  hargaLapangan: string;
+  hargaMember: string;
+  jumlahLapangan: string;
 }
 
 const VerfikasiGor = ({navigation}: VerifikasiGor) => {
@@ -50,6 +53,9 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
           suratIzin: data.suratIzin,
           fotoGOR: data.fotoGOR,
           catatan: data.catatan,
+          hargaLapangan: data.hargaLapangan,
+          hargaMember: data.hargaMember,
+          jumlahLapangan: data.jumlahLapangan,
         };
       }),
     );
@@ -57,7 +63,6 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
     setDataGOR(fetchedData);
     setRefreshing(false);
   }, []);
-  console.log(dataGOR);
 
   React.useEffect(() => {
     if (isFocused) {
@@ -73,7 +78,7 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
       <FlatContainer backgroundColor="white">
         <Header title="Verifikasi GOR" />
         {dataGOR.length === 0 ? (
-          <NoData />
+          <NoData refreshing={refreshing} onRefresh={fetchGOR} />
         ) : (
           <ListVerifikasi
             data={dataGOR}

@@ -12,6 +12,9 @@ interface Data {
   fotoGOR: string;
   catatan: string;
   id: string;
+  hargaLapangan: string;
+  hargaMember: string;
+  jumlahLapangan: string;
 }
 interface VerifikasiField {
   data: Data[];
@@ -113,6 +116,12 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       <InputField placeholder={data[0].namaLengkap} editable={false} />
       <Text style={styles.label}>Nama GOR</Text>
       <InputField placeholder={data[0].namaGOR} editable={false} />
+      <Text style={styles.label}>Jumlah Lapangan</Text>
+      <InputField placeholder={data[0].jumlahLapangan} editable={false} />
+      <Text style={styles.label}>Harga Lapangan</Text>
+      <InputField placeholder={data[0].hargaLapangan} editable={false} />
+      <Text style={styles.label}>Harga Member</Text>
+      <InputField placeholder={data[0].hargaMember} editable={false} />
       <Text style={styles.label}>Surat Izin Usaha</Text>
       <Pressable
         style={styles.btnSubmit}
