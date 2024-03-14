@@ -17,7 +17,9 @@ interface Profile {
 
 const Profile = ({navigation}: Profile) => {
   const [profileData, setProfileData] = React.useState({} as any);
+  const [imageProfile, setImageProfile] = React.useState('');
   const isFocused = useIsFocused();
+
   const fetchUser = React.useCallback(async () => {
     const user = auth().currentUser;
     if (user) {
@@ -27,6 +29,20 @@ const Profile = ({navigation}: Profile) => {
       setProfileData(userData.data());
     }
   }, []);
+
+  const fetchImageProfile = React.useCallback(() => {
+    const user = auth().currentUser;
+    try {
+      const query = firestore().collection('users').doc(user?.uid).get();
+      query.then(doc => {
+        const fetchedData = doc.data();
+        setImageProfile(fetchedData?.fotoUser);
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
+
   const handleLogout = async () => {
     try {
       const currentUser = auth().currentUser;
@@ -50,13 +66,14 @@ const Profile = ({navigation}: Profile) => {
   React.useEffect(() => {
     if (isFocused) {
       fetchUser();
+      fetchImageProfile();
     }
-  }, [fetchUser, isFocused]);
+  }, [fetchUser, fetchImageProfile, isFocused]);
   return (
     <>
       <RootContainer backgroundColor="white">
         <Header title="Profile" />
-        <ImageProfile />
+        <ImageProfile uri={imageProfile} />
         <EditButton onPress={handleNavigateToEditProfile} />
         <ProfileField data={profileData} />
         <LogoutButton onPress={handleLogout} />

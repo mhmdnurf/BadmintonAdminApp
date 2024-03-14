@@ -7,7 +7,7 @@ interface GorData {
   id: string;
   namaGOR: string;
   jumlahLapangan: number;
-  imageSource: any;
+  uri: string;
 }
 
 interface DaftarGor {
@@ -26,7 +26,7 @@ const DaftarGor = ({data, onPress}: DaftarGor) => {
         renderItem={({item}) => (
           <Pressable onPress={onPress(item.id)}>
             <LapanganCard
-              imageSource={item.imageSource}
+              uri={item.uri}
               namaGOR={item.namaGOR}
               jumlahLapangan={item.jumlahLapangan}
             />

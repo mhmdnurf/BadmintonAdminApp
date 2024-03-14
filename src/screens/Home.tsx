@@ -7,39 +7,51 @@ import InfoPendapatan from '../components/home/InfoPendapatan';
 import DaftarGor from '../components/home/DaftarGor';
 import JumlahGOR from '../components/home/JumlahGOR';
 import BottomSpace from '../components/BottomSpace';
+import firestore from '@react-native-firebase/firestore';
 
 interface Home {
   navigation: any;
 }
 
+interface Data {
+  id: string;
+  namaGOR: string;
+  jumlahLapangan: number;
+  uri: string;
+}
+
 const Home = ({navigation}: Home) => {
-  const data = [
-    {
-      id: '1',
-      namaGOR: 'GOR Chans',
-      jumlahLapangan: 5,
-      imageSource: require('../assets/img/lapangan_1.jpg'),
-    },
-    {
-      id: '2',
-      namaGOR: 'GOR Mahakam',
-      jumlahLapangan: 3,
-      imageSource: require('../assets/img/lapangan_2.jpg'),
-    },
-    {
-      id: '3',
-      namaGOR: 'GOR Rawasari',
-      jumlahLapangan: 4,
-      imageSource: require('../assets/img/lapangan_3.jpg'),
-    },
-  ];
+  const [data, setData] = React.useState<Data[]>([]);
+  const fetchDaftarGOR = React.useCallback(() => {
+    try {
+      const query = firestore()
+        .collection('users')
+        .where('status', '==', 'Aktif')
+        .get();
+
+      query.then(snapshot => {
+        snapshot.forEach(doc => {
+          const fetchedData = {
+            id: doc.id,
+            namaGOR: doc.data().namaGOR,
+            jumlahLapangan: doc.data().jumlahLapangan,
+            uri: doc.data().fotoGor,
+          };
+          setData(prevData => [...prevData, fetchedData]);
+        });
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
   const handleNavigateGORDetail = (id: string) => () => {
-    navigation.navigate('InfoGor', {
-      itemId: id,
-      namaGOR: 'GOR Chans',
-    });
+    navigation.navigate('InfoGor', {id});
   };
+
+  React.useEffect(() => {
+    fetchDaftarGOR();
+  }, [fetchDaftarGOR]);
   return (
     <>
       <RootContainer backgroundColor="white">

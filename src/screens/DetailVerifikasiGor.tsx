@@ -10,7 +10,6 @@ interface DetailVerifikasiGor {
 
 const DetailVerifikasiGor = ({route, navigation}: DetailVerifikasiGor) => {
   const {data} = route.params;
-  console.log(data);
   return (
     <>
       <RootContainer backgroundColor="white">

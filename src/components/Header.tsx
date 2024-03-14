@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
 interface Header {
-  title: string;
+  title: string | undefined;
   marginBottom?: number;
 }
 
