@@ -21,14 +21,30 @@ const SubmitButton = ({
   return (
     <>
       <View style={styles.container}>
-        <Pressable style={styles.btnSubmit} onPress={onPressConfirm}>
+        <Pressable
+          style={({pressed}) => [
+            {
+              borderWidth: pressed ? 3 : 0,
+              borderColor: pressed ? '#C7C8CC' : '',
+            },
+            styles.btnSubmit,
+          ]}
+          onPress={onPressConfirm}>
           {isLoading ? (
             <ActivityIndicator size={25} color="white" />
           ) : (
             <Text style={styles.btnText}>Konfirmasi</Text>
           )}
         </Pressable>
-        <Pressable style={styles.btnTolak} onPress={onPressTolak}>
+        <Pressable
+          style={({pressed}) => [
+            {
+              borderWidth: pressed ? 3 : 0,
+              borderColor: pressed ? '#C7C8CC' : '',
+            },
+            styles.btnTolak,
+          ]}
+          onPress={onPressTolak}>
           {isLoading ? (
             <ActivityIndicator size={25} color="white" />
           ) : (

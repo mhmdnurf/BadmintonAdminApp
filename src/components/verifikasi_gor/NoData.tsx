@@ -29,5 +29,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins SemiBold',
     marginTop: 20,
     textAlign: 'center',
+    color: '#4F4F4F',
   },
 });

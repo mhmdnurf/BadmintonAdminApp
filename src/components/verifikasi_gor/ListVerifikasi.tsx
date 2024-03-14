@@ -1,5 +1,5 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {Pressable, RefreshControl} from 'react-native';
 import ListCard from './ListCard';
 import {FlatList} from 'react-native-gesture-handler';
 
@@ -13,13 +13,23 @@ interface ListVerifikasiData {
 interface ListVerifikasi {
   data: ListVerifikasiData[];
   onPress: () => void;
+  refreshing: boolean;
+  onRefresh: () => void;
 }
 
-const ListVerifikasi = ({data, onPress}: ListVerifikasi) => {
+const ListVerifikasi = ({
+  data,
+  onPress,
+  refreshing,
+  onRefresh,
+}: ListVerifikasi) => {
   return (
     <>
       <FlatList
         data={data}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({item}) => (
           <Pressable onPress={onPress}>
             <ListCard

@@ -17,41 +17,47 @@ interface Data {
   namaLengkap: string;
   namaGOR: string;
   status: string;
+  suratIzin: string;
+  fotoGOR: string;
+  catatan: string;
 }
 
 const VerfikasiGor = ({navigation}: VerifikasiGor) => {
   const isFocused = useIsFocused();
   const [dataGOR, setDataGOR] = React.useState<Data[]>([]);
+  const [refreshing, setRefreshing] = React.useState(false);
   const fetchGOR = React.useCallback(async () => {
-    const belumTerverifikasiRef = firestore()
-      .collection('users')
-      .where('status', '==', 'Belum Terverifikasi');
+    setRefreshing(true);
+    const query = await firestore()
+      .collection('gor')
+      .where('status', '!=', 'Aktif')
+      .get();
 
-    const ditolakRef = firestore()
-      .collection('users')
-      .where('status', '==', 'Ditolak');
+    const fetchedData = await Promise.all(
+      query.docs.map(async doc => {
+        const data = doc.data() as FirebaseFirestoreTypes.DocumentData;
+        const userDoc = await firestore()
+          .collection('users')
+          .doc(data.user_uid)
+          .get();
+        const userData = userDoc.data() as FirebaseFirestoreTypes.DocumentData;
 
-    const [belumTerverifikasiSnapshot, ditolakSnapshot] = await Promise.all([
-      belumTerverifikasiRef.get(),
-      ditolakRef.get(),
-    ]);
+        return {
+          id: doc.id,
+          namaLengkap: userData.namaLengkap,
+          namaGOR: data.namaGOR,
+          status: data.status,
+          suratIzin: data.suratIzin,
+          fotoGOR: data.fotoGOR,
+          catatan: data.catatan,
+        };
+      }),
+    );
 
-    const mapData = (
-      snapshot: FirebaseFirestoreTypes.QuerySnapshot<FirebaseFirestoreTypes.DocumentData>,
-    ) =>
-      snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id,
-        namaLengkap: doc.data().namaLengkap,
-        namaGOR: doc.data().namaGOR,
-        status: doc.data().status,
-      }));
-
-    const belumTerverifikasiData = mapData(belumTerverifikasiSnapshot);
-    const ditolakData = mapData(ditolakSnapshot);
-
-    setDataGOR([...belumTerverifikasiData, ...ditolakData]);
+    setDataGOR(fetchedData);
+    setRefreshing(false);
   }, []);
+  console.log(dataGOR);
 
   React.useEffect(() => {
     if (isFocused) {
@@ -69,7 +75,12 @@ const VerfikasiGor = ({navigation}: VerifikasiGor) => {
         {dataGOR.length === 0 ? (
           <NoData />
         ) : (
-          <ListVerifikasi data={dataGOR} onPress={handleNavigate} />
+          <ListVerifikasi
+            data={dataGOR}
+            onPress={handleNavigate}
+            refreshing={refreshing}
+            onRefresh={fetchGOR}
+          />
         )}
       </FlatContainer>
     </>

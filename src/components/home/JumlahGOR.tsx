@@ -7,7 +7,7 @@ const JumlahGOR = () => {
 
   const fetchJumlahGOR = React.useCallback(async () => {
     const jumlahGORRef = firestore()
-      .collection('users')
+      .collection('gor')
       .where('status', '==', 'Aktif');
     const snapshot = await jumlahGORRef.get();
     setJumlahGOR(snapshot.size);

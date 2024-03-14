@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: '#6F7789',
+    color: '#4F4F4F',
     fontFamily: 'Nunito SemiBold',
   },
   statusContainer: {

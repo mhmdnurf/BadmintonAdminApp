@@ -12,7 +12,7 @@ type InfoData = {
   alamat: string;
   waktuBuka: string;
   waktuTutup: string;
-  fotoGor: string;
+  fotoGOR: string;
   suratIzin: string;
   status: string;
 };
@@ -47,8 +47,8 @@ const InfoField = ({data}: InfoField) => {
         <Pressable
           style={styles.btnContainer}
           onPress={() => {
-            if (data?.fotoGor) {
-              InAppBrowser.open(data.fotoGor);
+            if (data?.fotoGOR) {
+              InAppBrowser.open(data.fotoGOR);
             } else {
               Alert.alert('Error', 'No link available');
             }
@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
+    color: '#31363F',
   },
   btnContainer: {
     backgroundColor: '#AAC8A7',
@@ -92,6 +93,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: 'Poppins SemiBold',
   },
 });

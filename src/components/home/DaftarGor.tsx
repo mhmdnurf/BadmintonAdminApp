@@ -24,7 +24,7 @@ const DaftarGor = ({data, onPress}: DaftarGor) => {
         data={data}
         showsHorizontalScrollIndicator={false}
         renderItem={({item}) => (
-          <Pressable onPress={onPress(item.id)}>
+          <Pressable key={item.id} onPress={onPress(item.id)}>
             <LapanganCard
               uri={item.uri}
               namaGOR={item.namaGOR}

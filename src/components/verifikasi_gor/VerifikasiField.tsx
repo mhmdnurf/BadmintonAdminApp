@@ -9,9 +9,9 @@ interface Data {
   namaLengkap: string;
   namaGOR: string;
   suratIzin: string;
-  fotoGor: string;
+  fotoGOR: string;
   catatan: string;
-  user_uid: string;
+  id: string;
 }
 interface VerifikasiField {
   data: Data[];
@@ -25,9 +25,9 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
   const handleConfirmRequest = async () => {
     setIsLoading(true);
     try {
-      const userUID = data[0].user_uid;
-      await firestore().collection('users').doc(userUID).update({
-        status: 'Terverifikasi',
+      const userUID = data[0].id;
+      await firestore().collection('gor').doc(userUID).update({
+        status: 'Aktif',
         catatan: 'Verifikasi GOR telah dikonfirmasi',
       });
       console.log('Data berhasil diupdate', {
@@ -46,8 +46,8 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
   const handleTolakRequest = async () => {
     setIsLoading(true);
     try {
-      const userUID = data[0].user_uid;
-      await firestore().collection('users').doc(userUID).update({
+      const userUID = data[0].id;
+      await firestore().collection('gor').doc(userUID).update({
         status: 'Ditolak',
         catatan: catatan,
       });
@@ -122,13 +122,13 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       <Text style={styles.label}>Foto GOR</Text>
       <Pressable
         style={styles.btnSubmit}
-        onPress={() => InAppBrowser.open(data[0].fotoGor)}>
+        onPress={() => InAppBrowser.open(data[0].fotoGOR)}>
         <Text style={styles.btnText}>Lihat</Text>
       </Pressable>
       <Text style={styles.label}>Catatan</Text>
       <InputField
-        placeholder={data[0].catatan}
-        value={catatan}
+        placeholder={'Catatan'}
+        value={data[0].catatan ? data[0].catatan : '-'}
         onChangeText={setCatatan}
       />
       <SubmitButton

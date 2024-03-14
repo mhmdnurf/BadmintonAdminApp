@@ -8,6 +8,7 @@ import DaftarGor from '../components/home/DaftarGor';
 import JumlahGOR from '../components/home/JumlahGOR';
 import BottomSpace from '../components/BottomSpace';
 import firestore from '@react-native-firebase/firestore';
+import {useIsFocused} from '@react-navigation/native';
 
 interface Home {
   navigation: any;
@@ -21,24 +22,27 @@ interface Data {
 }
 
 const Home = ({navigation}: Home) => {
+  const isFocused = useIsFocused();
   const [data, setData] = React.useState<Data[]>([]);
   const fetchDaftarGOR = React.useCallback(() => {
     try {
       const query = firestore()
-        .collection('users')
+        .collection('gor')
         .where('status', '==', 'Aktif')
         .get();
 
       query.then(snapshot => {
+        const newData: Data[] = [];
         snapshot.forEach(doc => {
           const fetchedData = {
             id: doc.id,
             namaGOR: doc.data().namaGOR,
             jumlahLapangan: doc.data().jumlahLapangan,
-            uri: doc.data().fotoGor,
+            uri: doc.data().fotoGOR,
           };
-          setData(prevData => [...prevData, fetchedData]);
+          newData.push(fetchedData);
         });
+        setData(newData);
       });
     } catch (error) {
       console.log('error', error);
@@ -50,8 +54,10 @@ const Home = ({navigation}: Home) => {
   };
 
   React.useEffect(() => {
-    fetchDaftarGOR();
-  }, [fetchDaftarGOR]);
+    if (isFocused) {
+      fetchDaftarGOR();
+    }
+  }, [fetchDaftarGOR, isFocused]);
   return (
     <>
       <RootContainer backgroundColor="white">

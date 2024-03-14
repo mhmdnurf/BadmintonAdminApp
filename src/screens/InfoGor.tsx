@@ -20,9 +20,10 @@ interface Data {
   alamat: string;
   waktuBuka: string;
   waktuTutup: string;
-  fotoGor: string;
+  fotoGOR: string;
   suratIzin: string;
   status: string;
+  user_uid: string;
 }
 
 const InfoGor = ({route}: InfoGor) => {
@@ -30,15 +31,32 @@ const InfoGor = ({route}: InfoGor) => {
 
   const {id} = route.params;
 
-  const fetchInfoGOR = React.useCallback(() => {
+  const fetchInfoGOR = React.useCallback(async () => {
     try {
-      const query = firestore().collection('users').doc(id).get();
-      query.then(doc => {
-        const fetchedData = doc.data();
-        if (fetchedData) {
-          setData(fetchedData as Data);
+      const doc = await firestore().collection('gor').doc(id).get();
+      const fetchedData = doc.data();
+      if (fetchedData) {
+        setData(fetchedData as Data);
+
+        const userDoc = await firestore()
+          .collection('users')
+          .doc(fetchedData.user_uid)
+          .get();
+        const userData = userDoc.data();
+        if (userData) {
+          setData(
+            currentData =>
+              ({
+                ...currentData,
+                fotoUser: userData.fotoUser,
+                namaLengkap: userData.namaLengkap,
+                jenisKelamin: userData.jenisKelamin,
+                email: userData.email,
+                nomor: userData.nomor,
+              } as Data),
+          );
         }
-      });
+      }
     } catch (error) {
       console.log('error', error);
     }
