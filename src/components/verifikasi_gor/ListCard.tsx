@@ -13,8 +13,9 @@ const ListCard = ({fullName, namaGOR, status, backgroundColor}: ListCard) => {
     <>
       <View style={styles.container}>
         <View style={styles.cardContainer}>
-          <Text style={styles.title}>{fullName}</Text>
-          <Text style={styles.title}>{namaGOR}</Text>
+          <Text style={styles.title}>
+            {fullName} - {namaGOR}
+          </Text>
           <View style={[styles.statusContainer, {backgroundColor}]}>
             <Text style={styles.statusText}>{status}</Text>
           </View>

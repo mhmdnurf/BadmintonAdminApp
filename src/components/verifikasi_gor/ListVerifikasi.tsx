@@ -37,7 +37,7 @@ const ListVerifikasi = ({
               namaGOR={item.namaGOR}
               status={item.status}
               backgroundColor={
-                item.status === 'Belum Terverifikasi' ? '#EEC759' : '#FF8080'
+                item.status === 'Menunggu Aktivasi' ? '#EEC759' : '#FF8080'
               }
             />
           </Pressable>

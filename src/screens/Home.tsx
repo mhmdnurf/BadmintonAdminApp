@@ -24,7 +24,9 @@ interface Data {
 const Home = ({navigation}: Home) => {
   const isFocused = useIsFocused();
   const [data, setData] = React.useState<Data[]>([]);
+  const [refreshing, setRefreshing] = React.useState(false);
   const fetchDaftarGOR = React.useCallback(() => {
+    setRefreshing(true);
     try {
       const query = firestore()
         .collection('gor')
@@ -46,6 +48,8 @@ const Home = ({navigation}: Home) => {
       });
     } catch (error) {
       console.log('error', error);
+    } finally {
+      setRefreshing(false);
     }
   }, []);
 
@@ -60,7 +64,10 @@ const Home = ({navigation}: Home) => {
   }, [fetchDaftarGOR, isFocused]);
   return (
     <>
-      <RootContainer backgroundColor="white">
+      <RootContainer
+        backgroundColor="white"
+        refreshing={refreshing}
+        onRefresh={fetchDaftarGOR}>
         <HeaderContainer>
           <Header title="Dashboard" />
           <DashboardHeader />

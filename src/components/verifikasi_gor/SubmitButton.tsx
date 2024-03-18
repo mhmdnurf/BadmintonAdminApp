@@ -40,7 +40,7 @@ const SubmitButton = ({
           style={({pressed}) => [
             {
               borderWidth: pressed ? 3 : 0,
-              borderColor: pressed ? '#C7C8CC' : '',
+              borderColor: pressed ? 'gray' : '',
             },
             styles.btnTolak,
           ]}

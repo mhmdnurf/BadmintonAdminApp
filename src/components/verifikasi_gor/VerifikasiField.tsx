@@ -31,7 +31,7 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       const userUID = data[0].id;
       await firestore().collection('gor').doc(userUID).update({
         status: 'Aktif',
-        catatan: 'Verifikasi GOR telah dikonfirmasi',
+        catatan: 'Verifikasi GOR telah dikonfirmasi.',
       });
       console.log('Data berhasil diupdate', {
         status: 'Terverifikasi',
@@ -119,9 +119,17 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       <Text style={styles.label}>Jumlah Lapangan</Text>
       <InputField placeholder={data[0].jumlahLapangan} editable={false} />
       <Text style={styles.label}>Harga Lapangan</Text>
-      <InputField placeholder={data[0].hargaLapangan} editable={false} />
+      <InputField
+        placeholder={
+          data[0].hargaLapangan ? data[0].hargaLapangan : 'Belum diatur'
+        }
+        editable={false}
+      />
       <Text style={styles.label}>Harga Member</Text>
-      <InputField placeholder={data[0].hargaMember} editable={false} />
+      <InputField
+        placeholder={data[0].hargaMember ? data[0].hargaMember : 'Belum diatur'}
+        editable={false}
+      />
       <Text style={styles.label}>Surat Izin Usaha</Text>
       <Pressable
         style={styles.btnSubmit}
