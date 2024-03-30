@@ -1,30 +1,38 @@
 import React from 'react';
-import {Pressable, FlatList} from 'react-native';
+import {Pressable, FlatList, RefreshControl} from 'react-native';
 import ListCard from './ListCard';
 import BottomSpace from '../BottomSpace';
 
 interface ListVerifikasiData {
   id: string;
   date: string;
-  totalKomisi: number;
+  jumlahKomisi: number;
   namaGOR: string;
 }
 
 interface ListKomisi {
   data: ListVerifikasiData[];
   onPress: () => void;
+  refreshing: boolean;
+  onRefresh: () => void;
 }
 
-const ListKomisi = ({data, onPress}: ListKomisi) => {
+const ListKomisi = ({data, onPress, refreshing, onRefresh}: ListKomisi) => {
   return (
     <>
       <FlatList
         data={data}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
         renderItem={({item}) => (
           <Pressable onPress={onPress}>
             <ListCard
-              date={item.date}
-              totalKomisi={item.totalKomisi}
+              date={new Date().toLocaleDateString('id-ID', {
+                year: 'numeric',
+                month: 'long',
+              })}
+              totalKomisi={item.jumlahKomisi.toLocaleString()}
               namaGOR={item.namaGOR}
             />
           </Pressable>

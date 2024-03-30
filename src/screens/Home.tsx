@@ -9,6 +9,7 @@ import JumlahGOR from '../components/home/JumlahGOR';
 import BottomSpace from '../components/BottomSpace';
 import firestore from '@react-native-firebase/firestore';
 import {useIsFocused} from '@react-navigation/native';
+import {StatusBar} from 'react-native';
 
 interface Home {
   navigation: any;
@@ -53,6 +54,25 @@ const Home = ({navigation}: Home) => {
     }
   }, []);
 
+  const fetchKomisi = React.useCallback(async () => {
+    const date = new Date();
+    const monthYear =
+      date.toLocaleString('default', {month: 'long'}) +
+      date.getFullYear().toString();
+    setRefreshing(true);
+    try {
+      const query = firestore().collection('komisi').doc(monthYear).get();
+      const doc = await query;
+      if (doc.exists) {
+        console.log(doc.data());
+      }
+    } catch (error) {
+      console.log('error', error);
+    } finally {
+      setRefreshing(false);
+    }
+  }, []);
+
   const handleNavigateGORDetail = (id: string) => () => {
     navigation.navigate('InfoGor', {id});
   };
@@ -60,10 +80,12 @@ const Home = ({navigation}: Home) => {
   React.useEffect(() => {
     if (isFocused) {
       fetchDaftarGOR();
+      fetchKomisi();
     }
-  }, [fetchDaftarGOR, isFocused]);
+  }, [fetchDaftarGOR, isFocused, fetchKomisi]);
   return (
     <>
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <RootContainer
         backgroundColor="white"
         refreshing={refreshing}

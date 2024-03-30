@@ -3,7 +3,7 @@ import {StyleSheet, Text, View} from 'react-native';
 
 interface ListCard {
   date: string;
-  totalKomisi: number;
+  totalKomisi: string;
   namaGOR: string;
 }
 
