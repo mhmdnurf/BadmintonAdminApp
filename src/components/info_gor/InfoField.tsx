@@ -19,9 +19,10 @@ type InfoData = {
 
 interface InfoField {
   data: InfoData | undefined;
+  onPressStatus: () => void;
 }
 
-const InfoField = ({data}: InfoField) => {
+const InfoField = ({data, onPressStatus}: InfoField) => {
   return (
     <>
       <View style={styles.inputContainer}>
@@ -43,6 +44,13 @@ const InfoField = ({data}: InfoField) => {
         <InputField value={data?.jumlahLapangan.toString()} editable={false} />
         <Text style={styles.label}>Status GOR</Text>
         <InputField value={data?.status} editable={false} />
+        <Pressable style={styles.btnStatusContainer} onPress={onPressStatus}>
+          {data?.status === 'Aktif' ? (
+            <Text style={styles.btnText}>Noanktifkan</Text>
+          ) : (
+            <Text style={styles.btnText}>Aktifkan</Text>
+          )}
+        </Pressable>
         <Text style={styles.label}>Foto GOR</Text>
         <Pressable
           style={styles.btnContainer}
@@ -94,5 +102,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     fontFamily: 'Poppins SemiBold',
+  },
+  btnStatusContainer: {
+    backgroundColor: '#B4B4B8',
+    padding: 15,
+    borderRadius: 10,
   },
 });

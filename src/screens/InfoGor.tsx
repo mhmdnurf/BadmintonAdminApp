@@ -5,6 +5,7 @@ import BottomSpace from '../components/BottomSpace';
 import InfoField from '../components/info_gor/InfoField';
 import ImageProfile from '../components/profile/ImageProfile';
 import firestore from '@react-native-firebase/firestore';
+import {Alert} from 'react-native';
 interface InfoGor {
   route: any;
 }
@@ -28,10 +29,11 @@ interface Data {
 
 const InfoGor = ({route}: InfoGor) => {
   const [data, setData] = React.useState<Data>();
-
+  const [refreshing, setRefreshing] = React.useState(false);
   const {id} = route.params;
 
   const fetchInfoGOR = React.useCallback(async () => {
+    setRefreshing(true);
     try {
       const doc = await firestore().collection('gor').doc(id).get();
       const fetchedData = doc.data();
@@ -59,18 +61,38 @@ const InfoGor = ({route}: InfoGor) => {
       }
     } catch (error) {
       console.log('error', error);
+    } finally {
+      setRefreshing(false);
     }
   }, [id]);
+
+  const handleUpdateStatus = async () => {
+    try {
+      await firestore()
+        .collection('gor')
+        .doc(id)
+        .update({
+          status: data?.status === 'Aktif' ? 'Menunggu Aktivasi' : 'Aktif',
+        });
+      Alert.alert('Berhasil update', 'Status berhasil diubah');
+      fetchInfoGOR();
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
 
   React.useEffect(() => {
     fetchInfoGOR();
   }, [fetchInfoGOR]);
   return (
     <>
-      <RootContainer backgroundColor="white">
+      <RootContainer
+        backgroundColor="white"
+        refreshing={refreshing}
+        onRefresh={fetchInfoGOR}>
         <Header title={data?.namaGOR} />
         <ImageProfile uri={data?.fotoUser} />
-        <InfoField data={data} />
+        <InfoField data={data} onPressStatus={handleUpdateStatus} />
         <BottomSpace marginBottom={40} />
       </RootContainer>
     </>
