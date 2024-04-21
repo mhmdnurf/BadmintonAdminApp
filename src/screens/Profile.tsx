@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useIsFocused} from '@react-navigation/native';
+import {Alert} from 'react-native';
 
 interface Profile {
   navigation: any;
@@ -44,19 +45,39 @@ const Profile = ({navigation}: Profile) => {
   }, []);
 
   const handleLogout = async () => {
-    try {
-      const currentUser = auth().currentUser;
-      if (currentUser) {
-        await auth().signOut();
-        await AsyncStorage.removeItem('userToken');
-        console.log('User signed out!');
-        navigation.replace('Login');
-      } else {
-        console.log('No user is currently signed in.');
-      }
-    } catch (error) {
-      console.log('Error signing out:', error);
-    }
+    Alert.alert(
+      'Confirmation',
+      'Anda yakin ingin keluar?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            try {
+              const currentUser = auth().currentUser;
+              if (currentUser) {
+                await auth().signOut();
+                await AsyncStorage.removeItem('userToken');
+                console.log('User signed out!');
+                Alert.alert('Success', 'User signed out!');
+                navigation.replace('Login');
+              } else {
+                console.log('No user is currently signed in.');
+                Alert.alert('Error', 'No user is currently signed in.');
+              }
+            } catch (error) {
+              console.log('Error signing out:', error);
+              Alert.alert('Error', 'Error signing out: ' + error);
+            }
+          },
+        },
+      ],
+      {cancelable: false},
+    );
   };
 
   const handleNavigateToEditProfile = () => {

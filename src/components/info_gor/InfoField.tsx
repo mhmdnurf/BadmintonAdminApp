@@ -44,9 +44,18 @@ const InfoField = ({data, onPressStatus}: InfoField) => {
         <InputField value={data?.jumlahLapangan.toString()} editable={false} />
         <Text style={styles.label}>Status GOR</Text>
         <InputField value={data?.status} editable={false} />
-        <Pressable style={styles.btnStatusContainer} onPress={onPressStatus}>
+        <Pressable
+          style={[
+            styles.btnStatusContainer,
+            data?.status === 'Aktif'
+              ? // eslint-disable-next-line react-native/no-inline-styles
+                {backgroundColor: '#F87171'}
+              : // eslint-disable-next-line react-native/no-inline-styles
+                {backgroundColor: '#AAC8A7'},
+          ]}
+          onPress={onPressStatus}>
           {data?.status === 'Aktif' ? (
-            <Text style={styles.btnText}>Noanktifkan</Text>
+            <Text style={styles.btnText}>Nonkatifkan</Text>
           ) : (
             <Text style={styles.btnText}>Aktifkan</Text>
           )}
@@ -104,7 +113,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins SemiBold',
   },
   btnStatusContainer: {
-    backgroundColor: '#B4B4B8',
     padding: 15,
     borderRadius: 10,
   },

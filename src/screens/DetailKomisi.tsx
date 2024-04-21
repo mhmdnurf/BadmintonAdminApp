@@ -40,6 +40,19 @@ const DetailKomisi = ({route, navigation}: DetailKomisi) => {
       await query.collection('periode').doc(data[0]?.periode).update({
         status: 'Lunas',
       });
+
+      const notifikasiQuery = firestore().collection('notifikasi');
+      await notifikasiQuery.add({
+        user_uid: data[0].gor_uid,
+        title: 'Pemberitahuan Pelunasan Tagihan',
+        pesan: `
+        Tagihan komisi periode ${
+          data[0].periode
+        } telah dilunasi sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} dan disetujui oleh Admin
+        `,
+        status: 'success',
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      });
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -54,6 +67,18 @@ const DetailKomisi = ({route, navigation}: DetailKomisi) => {
       const query = firestore().collection('komisi').doc(data[0].gor_uid);
       await query.collection('periode').doc(data[0]?.periode).update({
         status: 'Ditolak',
+      });
+
+      const notifikasiQuery = firestore().collection('notifikasi');
+      await notifikasiQuery.add({
+        user_uid: data[0].gor_uid,
+        title: 'Pemberitahuan Pelunasan Tagihan',
+        pesan: `Bukti pembayaran tagihan komisi periode ${
+          data[0].periode
+        } sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} telah ditolak oleh Admin. Jika ada kesalahan silahkan hubungi Admin.
+        `,
+        status: 'failed',
+        createdAt: firestore.FieldValue.serverTimestamp(),
       });
     } catch (error) {
       console.log('error', error);
