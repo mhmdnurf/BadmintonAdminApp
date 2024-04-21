@@ -13,43 +13,35 @@ const DaftarKomisi = ({navigation}: DaftarKomisi) => {
   const [dataKomisi, setDataKomisi] = React.useState([] as any);
 
   const fetchKomisi = React.useCallback(async () => {
-    const date = new Date();
-    const monthYear =
-      date.toLocaleString('default', {month: 'long'}) +
-      date.getFullYear().toString();
-
     try {
       setRefreshing(true);
-      const subCollectionId = monthYear;
-      let newDataKomisi = [];
-      const gorQuery = await firestore().collection('gor').get();
+      let newDataKomisi = []; // Create a new array to hold the data
 
-      for (const gorDoc of gorQuery.docs) {
-        const gorDocId = gorDoc.id;
+      // Fetch all documents from the 'komisi' collection
+      const komisiQuery = await firestore().collection('komisi').get();
 
-        const subQuerySnapshot = await firestore()
+      for (const komisiDoc of komisiQuery.docs) {
+        const komisiDocId = komisiDoc.id;
+
+        // Fetch all documents from the 'periode' subcollection
+        const periodeQuery = await firestore()
           .collection('komisi')
-          .doc(gorDocId)
-          .collection(subCollectionId)
-          .doc(gorDocId)
+          .doc(komisiDocId)
+          .collection('periode')
           .get();
 
-        if (subQuerySnapshot.exists) {
-          console.log(subQuerySnapshot.data());
-          newDataKomisi.push(subQuerySnapshot.data()); // Add new data to the temporary array
+        for (const periodeDoc of periodeQuery.docs) {
+          console.log('data', periodeDoc.data());
+          newDataKomisi.push(periodeDoc.data()); // Add new data to the array
         }
       }
 
-      setDataKomisi((prevDataKomisi: any) => [
-        ...prevDataKomisi,
-        ...newDataKomisi,
-      ]);
+      setDataKomisi(newDataKomisi);
     } catch (error) {
       console.log('error', error);
     } finally {
       setRefreshing(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
@@ -57,7 +49,9 @@ const DaftarKomisi = ({navigation}: DaftarKomisi) => {
   }, [fetchKomisi]);
 
   const handleNavigateDetailKomisi = () => {
-    navigation.navigate('DetailKomisi');
+    navigation.navigate('DetailKomisi', {
+      data: dataKomisi,
+    });
   };
   return (
     <>

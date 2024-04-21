@@ -3,12 +3,17 @@ import RootContainer from '../components/RootContainer';
 import Header from '../components/Header';
 import KomisiField from '../components/daftar_komisi/KomisiField';
 
-const DetailKomisi = () => {
+interface DetailKomisi {
+  route: any;
+}
+
+const DetailKomisi = ({route}: DetailKomisi) => {
+  const {data} = route.params;
   return (
     <>
       <RootContainer backgroundColor="white">
         <Header title="Detail Komisi" />
-        <KomisiField />
+        <KomisiField data={data} />
       </RootContainer>
     </>
   );

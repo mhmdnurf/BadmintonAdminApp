@@ -26,6 +26,7 @@ const Home = ({navigation}: Home) => {
   const isFocused = useIsFocused();
   const [data, setData] = React.useState<Data[]>([]);
   const [refreshing, setRefreshing] = React.useState(false);
+  const [totalKomisi, setTotalKomisi] = React.useState(0);
   const fetchDaftarGOR = React.useCallback(() => {
     setRefreshing(true);
     try {
@@ -55,16 +56,17 @@ const Home = ({navigation}: Home) => {
   }, []);
 
   const fetchKomisi = React.useCallback(async () => {
+    setRefreshing(true);
     const date = new Date();
     const monthYear =
       date.toLocaleString('default', {month: 'long'}) +
       date.getFullYear().toString();
-    setRefreshing(true);
     try {
-      const query = firestore().collection('komisi').doc(monthYear).get();
+      const query = firestore().collection('totalKomisi').doc(monthYear).get();
       const doc = await query;
       if (doc.exists) {
-        console.log(doc.data());
+        const dataKomisi = doc.data();
+        setTotalKomisi(dataKomisi?.totalKomisi);
       }
     } catch (error) {
       console.log('error', error);
@@ -94,7 +96,7 @@ const Home = ({navigation}: Home) => {
           <Header title="Dashboard" />
           <DashboardHeader />
           <JumlahGOR />
-          <InfoPendapatan pendapatan={1000000} />
+          <InfoPendapatan pendapatan={totalKomisi} />
           <DaftarGor data={data} onPress={handleNavigateGORDetail} />
         </HeaderContainer>
         <BottomSpace marginBottom={100} />
