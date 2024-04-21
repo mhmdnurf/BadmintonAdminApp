@@ -3,12 +3,14 @@ import FlatContainer from '../components/FlatContainer';
 import Header from '../components/Header';
 import ListKomisi from '../components/daftar_komisi/ListKomisi';
 import firestore from '@react-native-firebase/firestore';
+import {useIsFocused} from '@react-navigation/native';
 
 interface DaftarKomisi {
   navigation: any;
 }
 
 const DaftarKomisi = ({navigation}: DaftarKomisi) => {
+  const isFocused = useIsFocused();
   const [refreshing, setRefreshing] = React.useState(false);
   const [dataKomisi, setDataKomisi] = React.useState([] as any);
 
@@ -45,8 +47,10 @@ const DaftarKomisi = ({navigation}: DaftarKomisi) => {
   }, []);
 
   React.useEffect(() => {
-    fetchKomisi();
-  }, [fetchKomisi]);
+    if (isFocused) {
+      fetchKomisi();
+    }
+  }, [fetchKomisi, isFocused]);
 
   const handleNavigateDetailKomisi = () => {
     navigation.navigate('DetailKomisi', {

@@ -25,9 +25,10 @@ const ListKomisi = ({data, onPress, refreshing, onRefresh}: ListKomisi) => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        renderItem={({item}) => (
+        renderItem={({item, index}) => (
           <Pressable onPress={onPress}>
             <ListCard
+              key={index}
               date={new Date().toLocaleDateString('id-ID', {
                 year: 'numeric',
                 month: 'long',
@@ -37,7 +38,6 @@ const ListKomisi = ({data, onPress, refreshing, onRefresh}: ListKomisi) => {
             />
           </Pressable>
         )}
-        keyExtractor={item => item.id}
         ListFooterComponent={<BottomSpace marginBottom={125} />}
       />
     </>

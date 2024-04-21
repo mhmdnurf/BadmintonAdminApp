@@ -7,33 +7,24 @@ import {
   View,
 } from 'react-native';
 import InputField from '../InputField';
-import firestore from '@react-native-firebase/firestore';
+
 import BottomSpace from '../BottomSpace';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 interface KomisiField {
   data: any;
+  isLoading: boolean;
+  onPressNotification: () => void;
+  onPressTolak: () => void;
+  onPressConfirm: () => void;
 }
 
-const KomisiField = ({data}: KomisiField) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const handleSendNotification = async () => {
-    try {
-      const query = firestore().collection('notifikasi');
-      await query.add({
-        user_uid: data[0].gor_uid,
-        title: 'Pemberitahuan Tagihan Komisi',
-        pesan: `Komisi periode ${
-          data[0].periode
-        } telah dikirimkan sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} kepada ${
-          data[0].namaPemilik
-        } atas GOR ${data[0].namaGOR}`,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-      });
-    } catch (error) {
-      console.log('error', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+const KomisiField = ({
+  data,
+  isLoading,
+  onPressNotification,
+  onPressConfirm,
+  onPressTolak,
+}: KomisiField) => {
   return (
     <>
       <View style={styles.container}>
@@ -67,16 +58,26 @@ const KomisiField = ({data}: KomisiField) => {
           editable={false}
           value={data[0].status}
         />
-        <Pressable style={styles.btnPembayaran}>
+        <Pressable
+          style={styles.btnPembayaran}
+          onPress={() => InAppBrowser.open(data[0].buktiPembayaran)}>
           <Text style={styles.btnText}>Bukti Pembayaran</Text>
         </Pressable>
-        <Pressable style={styles.btnSubmit} onPress={handleSendNotification}>
+        <Pressable style={styles.btnSubmit} onPress={onPressNotification}>
           {isLoading ? (
             <ActivityIndicator size="small" color="white" />
           ) : (
             <Text style={styles.btnText}>Kirim Notifikasi Tagihan</Text>
           )}
         </Pressable>
+        <View style={styles.btnRootContainer}>
+          <Pressable style={styles.btnConfirm} onPress={onPressConfirm}>
+            <Text style={styles.btnText}>Konfirmasi</Text>
+          </Pressable>
+          <Pressable style={styles.btnTolak} onPress={onPressTolak}>
+            <Text style={styles.btnText}>Tolak</Text>
+          </Pressable>
+        </View>
       </View>
       <BottomSpace marginBottom={100} />
     </>
@@ -112,5 +113,25 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 10,
     marginVertical: 10,
+  },
+  btnTolak: {
+    backgroundColor: '#FD4949',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+    width: '48%',
+  },
+  btnConfirm: {
+    backgroundColor: '#AAC8A7',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+    width: '48%',
+  },
+  btnRootContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
