@@ -12,7 +12,7 @@ interface ListVerifikasiData {
 
 interface ListKomisi {
   data: ListVerifikasiData[];
-  onPress: () => void;
+  onPress: (item: ListVerifikasiData) => void; // Add an item parameter here
   refreshing: boolean;
   onRefresh: () => void;
 }
@@ -26,7 +26,7 @@ const ListKomisi = ({data, onPress, refreshing, onRefresh}: ListKomisi) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         renderItem={({item, index}) => (
-          <Pressable onPress={onPress}>
+          <Pressable onPress={() => onPress(item)}>
             <ListCard
               key={index}
               date={new Date().toLocaleDateString('id-ID', {

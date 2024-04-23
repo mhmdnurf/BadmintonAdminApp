@@ -52,9 +52,9 @@ const DaftarKomisi = ({navigation}: DaftarKomisi) => {
     }
   }, [fetchKomisi, isFocused]);
 
-  const handleNavigateDetailKomisi = () => {
+  const handleNavigateDetailKomisi = (selectedItem: any) => {
     navigation.navigate('DetailKomisi', {
-      data: dataKomisi,
+      data: selectedItem,
     });
   };
   return (

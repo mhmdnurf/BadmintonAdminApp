@@ -72,7 +72,7 @@ const InfoGor = ({route}: InfoGor) => {
         .collection('gor')
         .doc(id)
         .update({
-          status: data?.status === 'Aktif' ? 'Menunggu Aktivasi' : 'Aktif',
+          status: data?.status === 'Aktif' ? 'Nonaktif' : 'Aktif',
         });
       Alert.alert('Berhasil update', 'Status berhasil diubah');
       fetchInfoGOR();

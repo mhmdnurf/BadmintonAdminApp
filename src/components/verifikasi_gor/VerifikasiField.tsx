@@ -27,14 +27,23 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
 
   const handleConfirmRequest = async () => {
     setIsLoading(true);
+    if (!data[0].hargaLapangan && !data[0].hargaMember) {
+      Alert.alert(
+        'Gagal Aktivasi!',
+        'Harga lapangan atau harga member belum diatur, aktivasi tidak dapat dilakukan',
+      );
+      setIsLoading(false);
+      return;
+    }
     try {
       const userUID = data[0].id;
       await firestore().collection('gor').doc(userUID).update({
         status: 'Aktif',
         catatan: 'Verifikasi GOR telah dikonfirmasi.',
       });
+      Alert.alert('Data berhasil diupdate', 'GOR berhasil disetujui');
       console.log('Data berhasil diupdate', {
-        status: 'Terverifikasi',
+        status: 'Aktif',
         catatan: catatan,
         userUID: userUID,
       });
@@ -54,6 +63,7 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
         status: 'Ditolak',
         catatan: catatan,
       });
+      Alert.alert('Data berhasil diupdate', 'GOR berhasil ditolak');
       console.log('Data berhasil diupdate', {
         status: 'Ditolak',
         catatan: catatan,
@@ -145,8 +155,8 @@ const VerifikasiField = ({data, navigation}: VerifikasiField) => {
       <Text style={styles.label}>Catatan</Text>
       <InputField
         placeholder={'Catatan'}
-        value={data[0].catatan ? data[0].catatan : '-'}
-        onChangeText={setCatatan}
+        value={data[0].catatan && data[0].catatan}
+        onChangeText={text => setCatatan(text)}
       />
       <SubmitButton
         onPressConfirm={handleConfirm}

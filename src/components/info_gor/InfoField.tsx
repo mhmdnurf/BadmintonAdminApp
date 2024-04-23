@@ -44,22 +44,7 @@ const InfoField = ({data, onPressStatus}: InfoField) => {
         <InputField value={data?.jumlahLapangan.toString()} editable={false} />
         <Text style={styles.label}>Status GOR</Text>
         <InputField value={data?.status} editable={false} />
-        <Pressable
-          style={[
-            styles.btnStatusContainer,
-            data?.status === 'Aktif'
-              ? // eslint-disable-next-line react-native/no-inline-styles
-                {backgroundColor: '#F87171'}
-              : // eslint-disable-next-line react-native/no-inline-styles
-                {backgroundColor: '#AAC8A7'},
-          ]}
-          onPress={onPressStatus}>
-          {data?.status === 'Aktif' ? (
-            <Text style={styles.btnText}>Nonkatifkan</Text>
-          ) : (
-            <Text style={styles.btnText}>Aktifkan</Text>
-          )}
-        </Pressable>
+
         <Text style={styles.label}>Foto GOR</Text>
         <Pressable
           style={styles.btnContainer}
@@ -83,6 +68,22 @@ const InfoField = ({data, onPressStatus}: InfoField) => {
             }
           }}>
           <Text style={styles.btnText}>Lihat Foto</Text>
+        </Pressable>
+        <Pressable
+          style={[
+            styles.btnStatusContainer,
+            data?.status === 'Aktif'
+              ? // eslint-disable-next-line react-native/no-inline-styles
+                {backgroundColor: '#F87171'}
+              : // eslint-disable-next-line react-native/no-inline-styles
+                {backgroundColor: '#AAC8A7'},
+          ]}
+          onPress={onPressStatus}>
+          {data?.status === 'Aktif' ? (
+            <Text style={styles.btnText}>Nonaktifkan</Text>
+          ) : (
+            <Text style={styles.btnText}>Aktifkan</Text>
+          )}
         </Pressable>
       </View>
     </>
@@ -115,5 +116,6 @@ const styles = StyleSheet.create({
   btnStatusContainer: {
     padding: 15,
     borderRadius: 10,
+    marginTop: 20,
   },
 });

@@ -32,35 +32,31 @@ const KomisiField = ({
         <InputField
           placeholder="Nama Pemilik"
           editable={false}
-          value={data[0].namaPemilik}
+          value={data.namaPemilik}
         />
         <Text style={styles.label}>Nama GOR</Text>
         <InputField
           placeholder="Nama GOR"
           editable={false}
-          value={data[0].namaGOR}
+          value={data.namaGOR}
         />
         <Text style={styles.label}>Periode</Text>
         <InputField
           placeholder="Periode"
           editable={false}
-          value={data[0].periode.replace(/(^[a-zA-Z]+)(\d+$)/, '$1 $2')}
+          value={data.periode.replace(/(^[a-zA-Z]+)(\d+$)/, '$1 $2')}
         />
         <Text style={styles.label}>Jumlah Komisi</Text>
         <InputField
           placeholder="Jumlah Komisi"
           editable={false}
-          value={data[0].jumlahKomisi.toLocaleString()}
+          value={data.jumlahKomisi.toLocaleString()}
         />
         <Text style={styles.label}>Status</Text>
-        <InputField
-          placeholder="Status"
-          editable={false}
-          value={data[0].status}
-        />
+        <InputField placeholder="Status" editable={false} value={data.status} />
         <Pressable
           style={styles.btnPembayaran}
-          onPress={() => InAppBrowser.open(data[0].buktiPembayaran)}>
+          onPress={() => InAppBrowser.open(data.buktiPembayaran)}>
           <Text style={styles.btnText}>Bukti Pembayaran</Text>
         </Pressable>
         <Pressable style={styles.btnSubmit} onPress={onPressNotification}>

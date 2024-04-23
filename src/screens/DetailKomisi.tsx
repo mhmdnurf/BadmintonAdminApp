@@ -17,15 +17,19 @@ const DetailKomisi = ({route, navigation}: DetailKomisi) => {
     try {
       const query = firestore().collection('notifikasi');
       await query.add({
-        user_uid: data[0].gor_uid,
+        user_uid: data.gor_uid,
         title: 'Pemberitahuan Tagihan Komisi',
         pesan: `Komisi periode ${
-          data[0].periode
-        } telah dikirimkan sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} kepada ${
-          data[0].namaPemilik
-        } atas GOR ${data[0].namaGOR}`,
+          data.periode
+        } telah dikirimkan sebesar Rp.${data.jumlahKomisi.toLocaleString()} kepada ${
+          data.namaPemilik
+        } atas GOR ${data.namaGOR}`,
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+      Alert.alert(
+        'Notifikasi berhasil dikirim',
+        'Pemberitahuan pelunasan tagihan komisi akan masuk ke aplikasi pemilik GOR',
+      );
     } catch (error) {
       console.log('error', error);
     } finally {
@@ -36,50 +40,55 @@ const DetailKomisi = ({route, navigation}: DetailKomisi) => {
   const handleConfirmRequest = async () => {
     setIsLoading(true);
     try {
-      const query = firestore().collection('komisi').doc(data[0].gor_uid);
-      await query.collection('periode').doc(data[0]?.periode).update({
+      const query = firestore().collection('komisi').doc(data.gor_uid);
+      await query.collection('periode').doc(data?.periode).update({
         status: 'Lunas',
       });
 
       const notifikasiQuery = firestore().collection('notifikasi');
       await notifikasiQuery.add({
-        user_uid: data[0].gor_uid,
+        user_uid: data.gor_uid,
         title: 'Pemberitahuan Pelunasan Tagihan',
         pesan: `
         Tagihan komisi periode ${
-          data[0].periode
-        } telah dilunasi sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} dan disetujui oleh Admin
+          data.periode
+        } telah dilunasi sebesar Rp.${data.jumlahKomisi.toLocaleString()} dan disetujui oleh Admin
         `,
         status: 'success',
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+      Alert.alert('Data berhasil diverifikasi', 'Tagihan menjadi lunas');
+      navigation.goBack();
     } catch (error) {
       console.log('error', error);
     } finally {
       setIsLoading(false);
-      navigation.goBack();
     }
   };
 
   const handleTolakRequest = async () => {
     setIsLoading(true);
     try {
-      const query = firestore().collection('komisi').doc(data[0].gor_uid);
-      await query.collection('periode').doc(data[0]?.periode).update({
-        status: 'Ditolak',
+      const query = firestore().collection('komisi').doc(data.gor_uid);
+      await query.collection('periode').doc(data?.periode).update({
+        status: 'Belum Lunas',
       });
 
       const notifikasiQuery = firestore().collection('notifikasi');
       await notifikasiQuery.add({
-        user_uid: data[0].gor_uid,
+        user_uid: data.gor_uid,
         title: 'Pemberitahuan Pelunasan Tagihan',
         pesan: `Bukti pembayaran tagihan komisi periode ${
-          data[0].periode
-        } sebesar Rp.${data[0].jumlahKomisi.toLocaleString()} telah ditolak oleh Admin. Jika ada kesalahan silahkan hubungi Admin.
-        `,
+          data.periode
+        } sebesar Rp.${data.jumlahKomisi.toLocaleString()} telah ditolak oleh Admin. Jika ada kesalahan silahkan hubungi Admin.
+      `,
         status: 'failed',
         createdAt: firestore.FieldValue.serverTimestamp(),
       });
+      Alert.alert(
+        'Data berhasil ditolak',
+        'Tagihan menjadi belum lunas kembali',
+      );
     } catch (error) {
       console.log('error', error);
     } finally {
