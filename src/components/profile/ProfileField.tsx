@@ -5,6 +5,9 @@ import InputField from '../InputField';
 interface Data {
   fullName: string;
   email: string;
+  nomor: string;
+  noRek: string;
+  namaBank: string;
 }
 interface ProfileField {
   data: Data;
@@ -16,6 +19,12 @@ const ProfileField = ({data}: ProfileField) => {
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Nama Lengkap</Text>
         <InputField value={data.fullName} editable={false} />
+        <Text style={styles.label}>Nomor Telepon</Text>
+        <InputField value={data.nomor} editable={false} />
+        <Text style={styles.label}>Nomor Rekening</Text>
+        <InputField value={data.noRek} editable={false} />
+        <Text style={styles.label}>Nama Bank</Text>
+        <InputField value={data.namaBank} editable={false} />
         <Text style={styles.label}>Email</Text>
         <InputField value={data.email} editable={false} />
       </View>

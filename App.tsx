@@ -9,6 +9,7 @@ import MainTabs from './src/components/nav/MainTabs';
 import InfoGor from './src/screens/InfoGor';
 import DetailVerifikasiGor from './src/screens/DetailVerifikasiGor';
 import DetailKomisi from './src/screens/DetailKomisi';
+import EditProfile from './src/screens/EditProfile';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +63,15 @@ export default function App() {
         <Stack.Screen
           name="DetailKomisi"
           component={DetailKomisi}
+          options={{
+            title: '',
+            headerShown: true,
+            headerTintColor: '#AAC8A7',
+          }}
+        />
+        <Stack.Screen
+          name="EditProfile"
+          component={EditProfile}
           options={{
             title: '',
             headerShown: true,
