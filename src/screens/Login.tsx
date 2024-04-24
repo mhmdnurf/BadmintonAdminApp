@@ -14,10 +14,6 @@ interface Login {
   navigation: any;
 }
 
-interface ExtendedError extends Error {
-  code?: string;
-}
-
 const Login = ({navigation}: Login) => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
@@ -25,6 +21,11 @@ const Login = ({navigation}: Login) => {
 
   const handleLogin = async () => {
     setIsLoading(true);
+    if (!email || !password) {
+      setIsLoading(false);
+      Alert.alert('Login gagal', 'Email dan password tidak boleh kosong');
+      return;
+    }
     try {
       const userCredential = await auth().signInWithEmailAndPassword(
         email,
@@ -50,7 +51,8 @@ const Login = ({navigation}: Login) => {
               await AsyncStorage.setItem('userToken', userToken);
               navigation.replace('Home');
             } else {
-              Alert.alert('Error', 'Login failed. Please try again later.');
+              console.error('User is not an admin');
+              Alert.alert('Login gagal', 'Anda bukan admin');
             }
           } else {
             console.error('No user data found');
@@ -59,15 +61,25 @@ const Login = ({navigation}: Login) => {
       } catch (error) {
         console.error(error);
       }
-    } catch (error) {
-      const err = error as ExtendedError;
-      if (err.code === 'auth/user-not-found') {
-        Alert.alert('Peringatan', 'Email/Password salah');
-      } else if (err.code === 'auth/wrong-password') {
-        Alert.alert('Peringatan', 'Email/Password salah');
+    } catch (e: any) {
+      console.log(e);
+      setIsLoading(false);
+      if (e.code === 'auth/invalid-email') {
+        Alert.alert('Login gagal', 'Format email tidak valid');
+      } else if (e.code === 'auth/user-disabled') {
+        Alert.alert('Login gagal', 'Pengguna ini telah dinonaktifkan');
+      } else if (e.code === 'auth/user-not-found') {
+        Alert.alert('Login gagal', 'Pengguna tidak ditemukan');
+      } else if (e.code === 'auth/wrong-password') {
+        Alert.alert('Login gagal', 'Password salah');
+      } else if (e.code === 'auth/network-request-failed') {
+        Alert.alert('Login gagal', 'Tidak ada koneksi internet');
+      } else if (e.code === 'auth/invalid-credential') {
+        Alert.alert('Login gagal', 'Email atau password tidak valid');
       } else {
-        Alert.alert('Error', 'Login failed. Please try again later.');
+        Alert.alert('Login gagal', 'Terjadi kesalahan');
       }
+      return;
     } finally {
       setIsLoading(false);
     }
